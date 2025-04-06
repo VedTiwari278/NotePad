@@ -32,10 +32,34 @@ exports.deleteNote = async (req, res) => {
   try {
     const id = req.params.id;
     await Note.findByIdAndDelete(id);
-    
+
     // Redirect to home page instead of rendering
-    res.redirect('/');
+    res.redirect("/");
   } catch (error) {
-    res.redirect('/');
+    res.redirect("/");
   }
 };
+
+exports.searchNotes = async (req, res) => {
+  console.log("Searching for notes...");
+  console.log("req.body:", req.body);
+
+  const search_value = req.body["Search-Value"];
+
+  if (typeof search_value !== "string" || !search_value.trim()) {
+    return res.status(400).json({ message: "Invalid search value" });
+  }
+
+  console.log("Search value:", search_value);
+
+  const allNotes = await Note.find();
+
+  const searchResults = allNotes.filter(
+    (note) =>
+      note.title &&
+      note.title.toLowerCase().includes(search_value.toLowerCase())
+  );
+  console.log("Search results:", searchResults);
+  res.render("index", { data: searchResults });
+};
+

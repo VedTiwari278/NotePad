@@ -8,6 +8,6 @@ router.post("/create", controller.postIndex);
 router.post("/find", controller.FindNotes);
 router.post("/details/:id", controller.FindByid);
 router.post("/delete/:id", controller.deleteNote);
-
+router.post("/search", controller.searchNotes);
 
 module.exports = router;

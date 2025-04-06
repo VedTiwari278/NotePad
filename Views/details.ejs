@@ -1,160 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Note Details</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f2f5;
-            margin: 0;
-            min-height: 100vh;
-            padding: 20px;
-        }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f0f2f5;
+        margin: 0;
+        min-height: 100vh;
+        padding: 20px;
+      }
 
-        .header {
-            background: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: -20px -20px 20px -20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .header {
+        background: white;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: -20px -20px 20px -20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .back-btn {
-            background: linear-gradient(45deg, #1a73e8, #4285f4);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
+      .back-btn {
+        background: linear-gradient(45deg, #1a73e8, #4285f4);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
 
-        .back-btn:before {
-            content: "←";
-        }
+      .back-btn:before {
+        content: "←";
+      }
 
-        .back-btn:hover {
-            background: linear-gradient(45deg, #1557b0, #1a73e8);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.2);
-        }
+      .back-btn:hover {
+        background: linear-gradient(45deg, #1557b0, #1a73e8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(26, 115, 232, 0.2);
+      }
 
-        .note-container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
+      .note-container {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
 
-        .note-title {
-            color: #1a73e8;
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 0 0 1rem 0;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f2f5;
-        }
+      .note-title {
+        color: #1a73e8;
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0 0 1rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f2f5;
+      }
 
-        .note-content {
-            color: #444;
-            line-height: 1.8;
-            font-size: 1.1rem;
-            margin: 1.5rem 0;
-            white-space: pre-wrap;
-        }
+      .note-content {
+        color: #444;
+        line-height: 1.8;
+        font-size: 1.1rem;
+        margin: 1.5rem 0;
+        white-space: pre-wrap;
+      }
 
-        .note-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 2px solid #f0f2f5;
-            color: #666;
-        }
+      .note-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 2px solid #f0f2f5;
+        color: #666;
+      }
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+      }
 
-        .actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+      .actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
 
-        .edit-btn, .delete-btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+      .edit-btn,
+      .delete-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-        .edit-btn {
-            background: linear-gradient(45deg, #34a853, #4caf50);
-            color: white;
-        }
+      .edit-btn {
+        background: linear-gradient(45deg, #34a853, #4caf50);
+        color: white;
+      }
 
-        .delete-btn {
-            background: linear-gradient(45deg, #ea4335, #dc3545);
-            color: white;
-        }
+      .delete-btn {
+        background: linear-gradient(45deg, #ea4335, #dc3545);
+        color: white;
+      }
 
-        .edit-btn:hover, .delete-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+      .edit-btn:hover,
+      .delete-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>Note Details</h1>
-        <a href="/" class="back-btn">Back to Notes</a>
+      <h1>Note Details</h1>
+      <a href="/" class="back-btn">Back to Notes</a>
     </div>
 
     <div class="note-container">
-        <h2 class="note-title"><%= data.title %></h2>
-        <div class="note-content"><%= data.content %></div>
-        
-        <div class="note-meta">
-            <div class="meta-item">
-                <span>📅 Created:</span>
-                <span><%= data.date %></span>
-            </div>
-            <div class="meta-item">
-                <span>⏰ Time:</span>
-                <span><%= data.time %></span>
-            </div>
-        </div>
+      <h2 class="note-title"><%= data.title %></h2>
+      <div class="note-content"><%= data.content %></div>
 
-        <div class="actions">
-            <form action="/edit/<%= data._id %>" method="GET" style="display: inline;">
-                <button type="submit" class="edit-btn">✏️ Edit Note</button>
-            </form>
-            <form action="/delete/<%= data._id %>" method="POST" style="display: inline;">
-                <button type="submit" class="delete-btn">🗑️ Delete Note</button>
-            </form>
+      <div class="note-meta">
+        <div class="meta-item">
+          <span>📅 Created:</span>
+          <span><%= data.date %></span>
         </div>
+        <div class="meta-item">
+          <span>⏰ Time:</span>
+          <span><%= data.time %></span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <form
+          action="/edit/<%= data._id %>"
+          method="GET"
+          style="display: inline"
+        >
+          <button type="submit" class="edit-btn">✏️ Edit Note</button>
+        </form>
+        <form
+          action="/delete/<%= data._id %>"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" class="delete-btn">🗑️ Delete Note</button>
+        </form>
+      </div>
     </div>
-</body>
+  </body>
 </html>
