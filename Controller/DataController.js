@@ -1,3 +1,4 @@
+const { Query } = require("mongoose");
 const Note = require("../model/InsertData");
 
 exports.getIndex = async (req, res) => {
@@ -5,7 +6,7 @@ exports.getIndex = async (req, res) => {
   const data = await Note.find({ user: userId });
   // console.log("Mera data", userId);
   // console.log("Data from database", data);
-  res.render("index", { data: data });
+  res.render("index", { data: data, Query: false });
 };
 
 exports.postIndex = (req, res) => {
@@ -67,4 +68,24 @@ exports.searchNotes = async (req, res) => {
   );
   // console.log("Search results:", searchResults);
   res.render("index", { data: searchResults });
+};
+
+exports.EditNotes = async (req, res) => {
+  const id = req.params.id;
+  const data = await Note.findById(id);
+  res.render("edit", { data: data, Query: true });
+};
+
+exports.UpdateEditedNote = async (req, res) => {
+  const id = req.params.id;
+  const { title, content } = req.body;
+  const data = await Note.findByIdAndUpdate(id, {
+    title: title,
+    content: content,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+  });
+
+  data.save();
+  res.redirect("/");
 };
