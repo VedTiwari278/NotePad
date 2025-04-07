@@ -1,7 +1,10 @@
 const Note = require("../model/InsertData");
 
 exports.getIndex = async (req, res) => {
-  const data = await Note.find();
+  const userId = req.session.user._id;
+  const data = await Note.find({user: userId});
+  console.log("Mera data", userId);
+  console.log("Data from database", data);
   res.render("index", { data: data });
 };
 
@@ -10,6 +13,7 @@ exports.postIndex = (req, res) => {
   const SaveNote = new Note({
     title: title,
     content: content,
+    user: req.session.user,
     date: new Date().toLocaleDateString(),
     time: new Date().toLocaleTimeString(),
   });
@@ -19,7 +23,9 @@ exports.postIndex = (req, res) => {
 };
 
 exports.FindNotes = async (req, res) => {
-  const data = await Note.find();
+  // const userId = req.session.user._id;
+  const data = await Note.findById(userId);
+  // console.log("Mera id ", userId);
   res.render("index", { data: data });
 };
 
@@ -62,4 +68,3 @@ exports.searchNotes = async (req, res) => {
   console.log("Search results:", searchResults);
   res.render("index", { data: searchResults });
 };
-
