@@ -149,8 +149,10 @@
         <p>Login to access your notes</p>
       </div>
 
-      <% if (locals.error) { %>
-      <div class="error-message"><%= error %></div>
+      <% if (error) { %>
+      <div class="error-message">
+        <strong><%=message%></strong>
+      </div>
       <% } %>
 
       <form action="/login" method="POST">

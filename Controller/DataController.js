@@ -2,9 +2,9 @@ const Note = require("../model/InsertData");
 
 exports.getIndex = async (req, res) => {
   const userId = req.session.user._id;
-  const data = await Note.find({user: userId});
-  console.log("Mera data", userId);
-  console.log("Data from database", data);
+  const data = await Note.find({ user: userId });
+  // console.log("Mera data", userId);
+  // console.log("Data from database", data);
   res.render("index", { data: data });
 };
 
@@ -47,8 +47,8 @@ exports.deleteNote = async (req, res) => {
 };
 
 exports.searchNotes = async (req, res) => {
-  console.log("Searching for notes...");
-  console.log("req.body:", req.body);
+  // console.log("Searching for notes...");
+  // console.log("req.body:", req.body);
 
   const search_value = req.body["Search-Value"];
 
@@ -56,7 +56,7 @@ exports.searchNotes = async (req, res) => {
     return res.status(400).json({ message: "Invalid search value" });
   }
 
-  console.log("Search value:", search_value);
+  // console.log("Search value:", search_value);
 
   const allNotes = await Note.find();
 
@@ -65,6 +65,6 @@ exports.searchNotes = async (req, res) => {
       note.title &&
       note.title.toLowerCase().includes(search_value.toLowerCase())
   );
-  console.log("Search results:", searchResults);
+  // console.log("Search results:", searchResults);
   res.render("index", { data: searchResults });
 };
