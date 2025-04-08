@@ -1,6 +1,5 @@
-// Database impoprt
-const { error } = require("console");
 const User = require("../model/Users");
+const { check, validationResult } = require("express-validator");
 
 //Login and Register Controller
 
@@ -33,18 +32,59 @@ exports.GetRegister = (req, res) => {
   // console.log("Registration credentials: ", req.body);
   res.render("register");
 };
-exports.PostRegister = async (req, res) => {
-  const { username, email, password } = req.body;
-  const data = new User({
-    username: username,
-    email: email,
-    password: password,
-  });
-  await data.save();
 
-  // console.log("User Registered Successfully: ", data);
-  res.redirect("/login");
-};
+exports.PostRegister = [
+  check("username").isLength({ min: 2 }).withMessage("Name is required..."),
+  check("email")
+    .isEmail()
+    .withMessage("Please enter a valid email...")
+    .normalizeEmail(),
+  check("password")
+    .isLength({ min: 6 })
+    .withMessage("Password should be at least 6 characters long"),
+  check("confirmPassword").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Passwords do not match");
+    }
+    return true;
+  }),
+
+  async (req, res) => {
+    const { username, email, password } = req.body;
+    const error = validationResult(req);
+
+    if (!error.isEmpty()) {
+      console.log("Ye dekho :", error);
+      return res.status(422).render("register", {
+        error: error.array().map((err) => err.msg),
+        isLoggedIn: false,
+      });
+    }
+
+    try {
+      const existingUser = await User.findOne({ email });
+
+      if (existingUser) {
+        return res.status(400).render("register", {
+          error: "Email is already registered",
+          isLoggedIn: false,
+        });
+      }
+
+      const newUser = new User({ username, email, password });
+      await newUser.save();
+
+      console.log("User Registered Successfully: ", newUser);
+      res.redirect("/login");
+    } catch (err) {
+      console.error("Registration error: ", err);
+      res.status(500).render("register", {
+        error: [err.message],
+        isLoggedIn: false,
+      });
+    }
+  },
+];
 
 exports.Logout = (req, res) => {
   // console.log("User Logged Out Successfully: ", req.session.user);
