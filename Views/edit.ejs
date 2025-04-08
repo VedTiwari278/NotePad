@@ -3,70 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit data</title>
+    <title>Edit Data</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: "Inter", sans-serif;
         margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #1a2a6c, #151e3c, #121952);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
         min-height: 100vh;
-        background: #f8fafc;
-        color: #1e293b;
-        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: white;
+        width: 90%;
+        max-width: 720px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
         padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
         padding-bottom: 1rem;
-        border-bottom: 2px solid #f1f5f9;
+        margin-bottom: 2rem;
       }
 
       h1 {
         margin: 0;
-        font-size: 1.8rem;
-        background: linear-gradient(45deg, #1a73e8, #4285f4);
+        font-size: 2rem;
+        background: linear-gradient(to right, #8e2de2, #4a00e0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
 
       .back-btn {
-        background: #f1f5f9;
-        color: #1e293b;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        font-weight: 500;
-        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
         text-decoration: none;
-        transition: all 0.2s ease;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
 
-      .back-btn:before {
+      .back-btn::before {
         content: "←";
       }
 
       .back-btn:hover {
-        background: #e2e8f0;
-        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
       }
 
       .form-group {
@@ -75,31 +97,41 @@
 
       label {
         display: block;
-        font-weight: 500;
+        font-weight: 600;
         margin-bottom: 0.5rem;
-        color: #1e293b;
+        color: #fff;
       }
 
       input,
       textarea {
         width: 100%;
-        padding: 0.75rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
+        padding: 0.8rem;
         font-size: 1rem;
+        border: none;
+        border-radius: 12px;
         font-family: inherit;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        backdrop-filter: blur(5px);
         transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.7);
       }
 
       input:focus,
       textarea:focus {
         outline: none;
-        border-color: #1a73e8;
-        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        border-color: #a78bfa;
+        box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.4);
+        background: rgba(255, 255, 255, 0.15);
       }
 
       textarea {
-        min-height: 200px;
+        min-height: 180px;
         resize: vertical;
       }
 
@@ -112,40 +144,35 @@
       .save-btn,
       .delete-btn {
         padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 8px;
         font-size: 1rem;
-        font-weight: 500;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
         cursor: pointer;
         transition: all 0.3s ease;
+        flex: 1;
+        color: white;
       }
 
       .save-btn {
-        background: linear-gradient(45deg, #1a73e8, #4285f4);
-        color: white;
-        flex: 1;
+        background: linear-gradient(to right, #06beb6, #48b1bf);
       }
 
       .save-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25);
+        transform: scale(1.03);
+        box-shadow: 0 10px 25px rgba(6, 190, 182, 0.4);
       }
 
       .delete-btn {
-        background: linear-gradient(45deg, #ef4444, #dc2626);
-        color: white;
+        background: linear-gradient(to right, #f85032, #e73827);
       }
 
       .delete-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        transform: scale(1.03);
+        box-shadow: 0 10px 25px rgba(248, 80, 50, 0.4);
       }
 
       @media (max-width: 640px) {
-        .container {
-          padding: 1.5rem;
-        }
-
         .buttons {
           flex-direction: column;
         }
@@ -160,8 +187,8 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>Edit data</h1>
-        <a href="/" class="back-btn">Back to datas</a>
+        <h1>Edit Data</h1>
+        <a href="/" class="back-btn">Back to Notes</a>
       </div>
 
       <form action="/edit/<%= data._id %>" method="POST">
@@ -173,7 +200,7 @@
             name="title"
             value="<%= data.title %>"
             required
-            placeholder="Enter data title"
+            placeholder="Enter note title"
           />
         </div>
 
@@ -183,21 +210,22 @@
             id="content"
             name="content"
             required
-            placeholder="Write your data here..."
+            placeholder="Write your note here..."
           >
-           <%= data.content %></textarea
+<%= data.content %></textarea
           >
         </div>
 
         <div class="buttons">
           <button type="submit" class="save-btn">Save Changes</button>
-          <form
-            action="/delete/<%= data._id %>"
-            method="POST"
-            style="display: inline"
+          <button
+            type="submit"
+            formaction="/delete/<%= data._id %>"
+            formmethod="POST"
+            class="delete-btn"
           >
-            <button type="submit" class="delete-btn">Delete data</button>
-          </form>
+            Delete Note
+          </button>
         </div>
       </form>
     </div>

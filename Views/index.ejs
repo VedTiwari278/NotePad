@@ -17,56 +17,103 @@
         font-family: "Inter", sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f0f4f8;
+        background: linear-gradient(135deg, #163d64, #12233f, #133671);
+        background-attachment: fixed;
+        background-size: cover;
         color: #333;
       }
 
       header {
-        background-color: #fff;
-        padding: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #1c1c1c, #2f2f2f);
+        padding: 20px 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
+        gap: 20px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0 0 16px 16px;
       }
 
       .brand {
-        font-size: 1.8rem;
-        font-weight: 600;
-        background: linear-gradient(to right, #6a11cb, #2575fc);
+        font-size: 2rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+
+        box-shadow: 0 4px 20px rgba(0, 114, 255, 0.3);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+        padding: 10px 20px;
+        border-radius: 12px;
+
+        transition: all 0.4s ease-in-out;
+        display: inline-block;
+        cursor: pointer;
       }
 
+      .brand:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(0, 114, 255, 0.5);
+      }
       .search-form {
         display: flex;
         gap: 10px;
         align-items: center;
         flex-wrap: wrap;
+        background: #1c1c1c;
+        padding: 8px 12px;
+        border-radius: 12px;
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.05);
       }
 
       .search-form input {
         padding: 10px;
-        border: 1px solid #ccc;
+        border: none;
         border-radius: 6px;
+        background: #333;
+        color: white;
+        outline: none;
+      }
+
+      .search-form input::placeholder {
+        color: #aaa;
       }
 
       .search-button {
-        background: #2575fc;
+        background: linear-gradient(to right, #0072ff, #00c6ff);
         color: #fff;
         border: none;
         padding: 10px 16px;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 114, 255, 0.4);
+        transition: all 0.3s ease-in-out;
       }
 
+      .search-button:hover {
+        transform: scale(1.05);
+      }
       .logout-btn {
         background: linear-gradient(to right, #ff512f, #dd2476);
         color: #fff;
         text-decoration: none;
         padding: 10px 16px;
-        border-radius: 6px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(221, 36, 118, 0.4);
+      }
+
+      .logout-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(221, 36, 118, 0.6);
       }
 
       .notes-grid {
@@ -97,8 +144,13 @@
 
       .note-title {
         margin: 0 0 5px;
-        font-size: 1.1rem;
-        color: #333;
+        font-size: 1.5rem;
+        color: Black;
+        border-radius: 0.5rem;
+        background: linear-gradient(to right, #00c6ff, #4c6484);
+        text-decoration: #0072ff;
+        text-align: center;
+        font-weight: 800;
         word-wrap: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -111,8 +163,8 @@
       }
 
       .note-meta {
-        font-size: 0.8rem;
-        color: #999;
+        font-size: 1rem;
+        color: #000000;
         display: flex;
         justify-content: space-between;
         word-wrap: break-word;
@@ -178,7 +230,7 @@
       }
 
       .submit-btn {
-        background: linear-gradient(to right, #00b09b, #96c93d);
+        background: linear-gradient(to right, #1b378b, #026bce);
         color: #fff;
         padding: 10px 18px;
         border: none;
@@ -201,6 +253,24 @@
       .empty-state {
         text-align: center;
         margin-top: 100px;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
+          text-align: center;
+        }
+
+        .search-form {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .logout-btn {
+          align-self: center;
+        }
       }
 
       @media (max-width: 768px) {
