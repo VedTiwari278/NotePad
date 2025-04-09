@@ -7,29 +7,46 @@ exports.GetLogin = (req, res) => {
   // console.log("Login karo");
   res.render("login", { error: false });
 };
+exports.PostLogin = [
+  check("email").isEmail(),
+  check("password").isLength({ min: 6 }),
 
-exports.PostLogin = async (req, res) => {
-  // console.log("Login credentials: ", req.body);
+  async (req, res) => {
+    const { email, password } = req.body;
+    const errors = validationResult(req);
 
-  const data = await User.findOne({
-    email: req.body.email,
-    password: req.body.password,
-  });
-  // console.log("User data: ", data.email);
-  if (!data) {
-    return res.render("login", {
-      error: true,
-      message: "You are not registered yet/check Your Credentials",
-    });
-  }
+    // ✅ Combined error message if either field is invalid
+    if (!errors.isEmpty()) {
+      return res.status(422).render("login", {
+        error: ["Invalid email or password"],
+        isLoggedIn: false,
+      });
+    }
 
-  req.session.isLoggedIn = true;
-  req.session.user = data;
-  res.redirect("/");
-};
+    try {
+      const user = await User.findOne({ email, password });
+
+      if (!user) {
+        return res.status(401).render("login", {
+          error: ["User not found or wrong credentials"],
+          isLoggedIn: false,
+        });
+      }
+
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      res.redirect("/");
+    } catch (err) {
+      console.error("Login Error:", err);
+      return res.status(500).render("login", {
+        error: ["Something went wrong. Please try again later."],
+        isLoggedIn: false,
+      });
+    }
+  },
+];
 
 exports.GetRegister = (req, res) => {
-  // console.log("Registration credentials: ", req.body);
   res.render("register");
 };
 
@@ -54,7 +71,6 @@ exports.PostRegister = [
     const error = validationResult(req);
 
     if (!error.isEmpty()) {
-      console.log("Ye dekho :", error);
       return res.status(422).render("register", {
         error: error.array().map((err) => err.msg),
         isLoggedIn: false,
@@ -74,7 +90,6 @@ exports.PostRegister = [
       const newUser = new User({ username, email, password });
       await newUser.save();
 
-      console.log("User Registered Successfully: ", newUser);
       res.redirect("/login");
     } catch (err) {
       console.error("Registration error: ", err);
@@ -87,10 +102,8 @@ exports.PostRegister = [
 ];
 
 exports.Logout = (req, res) => {
-  // console.log("User Logged Out Successfully: ", req.session.user);
   req.session.destroy((err) => {
     if (err) {
-      // console.error("Error destroying session:", err);
       return res.redirect("/");
     }
     res.redirect("/login");
