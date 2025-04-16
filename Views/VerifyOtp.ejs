@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - NotePad</title>
+    <title>Verify OTP</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -13,89 +13,7 @@
       body {
         font-family: "Inter", sans-serif;
       }
-    </style>
-  </head>
-  <body
-    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#163d64] via-[#12233f] to-[#133671] text-white px-4"
-  >
-    <div
-      class="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-lg border border-white/20 p-10 rounded-2xl shadow-2xl animate-fade-in"
-    >
-      <div class="text-center mb-8">
-        <h1
-          class="text-3xl font-bold bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent drop-shadow-md"
-        >
-          Welcome Back
-        </h1>
-        <p class="text-white/60 text-sm mt-1">Login to access your notes</p>
-      </div>
 
-      <% if (error) { %>
-      <div
-        class="bg-red-100 bg-opacity-10 text-red-400 text-sm border border-red-300/20 px-4 py-3 rounded-md mb-4 text-center"
-      >
-        <strong><%= error %></strong>
-      </div>
-      <% } %>
-
-      <form action="/login" method="POST" class="space-y-6">
-        <div>
-          <label for="email" class="block text-white/90 font-medium mb-2"
-            >Email Address</label
-          >
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="Enter your email"
-            class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-
-        <div>
-          <label for="password" class="block text-white/90 font-medium mb-2"
-            >Password</label
-          >
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            placeholder="Enter your password"
-            class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-
-        <button
-          type="submit"
-          class="w-full py-3 rounded-lg font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 hover:shadow-lg hover:-translate-y-0.5 transition"
-        >
-          Login
-        </button>
-      </form>
-
-      <div class="text-center text-sm text-white/60 mt-6">
-        <a
-          href="/forgot-password"
-          class="text-indigo-200 font-medium hover:underline transition"
-        >
-          Forget Password</a
-        >
-      </div>
-
-      <div class="text-center text-sm text-white/60 mt-6">
-        Don't have an account?
-        <a
-          href="/register"
-          class="text-indigo-200 font-medium hover:underline transition"
-          >Register here</a
-        >
-      </div>
-    </div>
-
-    <!-- Fade-in animation using Tailwind plugin -->
-    <style>
       @keyframes fade-in {
         0% {
           opacity: 0;
@@ -111,5 +29,63 @@
         animation: fade-in 0.6s ease-out both;
       }
     </style>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#163d64] via-[#12233f] to-[#133671] text-white px-4"
+  >
+    <div
+      class="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-lg border border-white/20 p-10 rounded-2xl shadow-2xl animate-fade-in"
+    >
+      <div class="text-center mb-6">
+        <h2
+          class="text-3xl font-bold bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent drop-shadow-md"
+        >
+          Verify OTP
+        </h2>
+        <p class="text-white/60 text-sm mt-1">
+          Enter the OTP sent to your email
+        </p>
+      </div>
+
+      <% if (typeof error !== "undefined" && error) { %>
+      <div
+        class="bg-red-100 bg-opacity-10 text-red-400 text-sm border border-red-300/20 px-4 py-3 rounded-md mb-4 text-center"
+      >
+        <strong><%= error %></strong>
+      </div>
+      <% } %>
+
+      <form action="/verify-otp" method="POST" class="space-y-6">
+        <div>
+          <label for="otp" class="block text-white/90 font-medium mb-2"
+            >Enter OTP</label
+          >
+          <input
+            type="text"
+            id="otp"
+            name="otp"
+            required
+            placeholder="123456"
+            class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3 rounded-lg font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 hover:shadow-lg hover:-translate-y-0.5 transition"
+        >
+          Verify
+        </button>
+      </form>
+
+      <div class="text-center text-sm text-white/60 mt-6">
+        <a
+          href="/forgot-password"
+          class="text-indigo-200 font-medium hover:underline transition"
+        >
+          Resend OTP</a
+        >
+      </div>
+    </div>
   </body>
 </html>
