@@ -1,15 +1,12 @@
 const User = require("../model/Users");
 const { check, validationResult } = require("express-validator");
 const nodeMailer = require("nodemailer");
-// const bcrypt = require("bcryptjs");
 
 const OtpModel = require("../model/OTPModel");
-const { log } = require("console");
 
 //Login and Register Controller
 
 exports.GetLogin = (req, res) => {
-  // console.log("Login karo");
   res.render("login", { error: false });
 };
 exports.PostLogin = [
@@ -115,7 +112,6 @@ exports.Logout = (req, res) => {
   });
 };
 exports.GetOtp = (req, res) => {
-  console.log("Forget password is open");
   res.render("ForgetPassword", { error: null });
 };
 
@@ -146,13 +142,13 @@ exports.postOtp = async (req, res) => {
       secure: true,
       port: 465,
       auth: {
-        user: "vedprakasht759@gmail.com",
-        pass: "kwgrrjjudivubvpv", // Use App Password (NEVER expose real password)
+        user: "projecttesting278@gmail.com",
+        pass: "ofdeinnzgrhuyode", // Use App Password (NEVER expose real password)
       },
     });
 
     const mailOptions = {
-      from: "vedprakasht759@gmail.com",
+      from: "projecttesting278@gmail.com",
       to: email,
       subject: "Your Password Reset OTP",
       text: `Hello ${email},\n\nYour OTP for password reset is: ${otp}\n\nThis OTP is valid for 10 minutes.`,
@@ -164,7 +160,6 @@ exports.postOtp = async (req, res) => {
         return res.status(500).send("Failed to send OTP");
       }
 
-      console.log("OTP sent successfully:", info.response);
       res.render("VerifyOtp", { email }); // Redirect to OTP verification page
     });
   } catch (err) {
@@ -175,13 +170,9 @@ exports.postOtp = async (req, res) => {
 
 exports.VerifyOtp = async (req, res) => {
   const OTP = req.body.otp;
-  console.log("OTP HAI: ", OTP);
   try {
     const DB_OTP = await OtpModel.findOne({ otp: OTP });
-    console.log(DB_OTP);
     if (DB_OTP) {
-      console.log("Matching OTP");
-
       const id = DB_OTP.user[0];
       const User_Id = await User.findOne({ _id: id });
       const email = User_Id.email;
@@ -189,7 +180,6 @@ exports.VerifyOtp = async (req, res) => {
 
       res.redirect("/ChangePassword");
     } else {
-      console.log("OTP not matched");
       // Stay on the same page and show error message
       return res.render("VerifyOtp", {
         error: "Invalid OTP. Please try again.",
