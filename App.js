@@ -43,6 +43,7 @@ app.get("/robots.txt", (req, res) => {
   res.type("text/plain");
   res.send(`User-agent: *
 Allow: /
+
 Sitemap: https://notepad-3-38di.onrender.com/sitemap.xml`);
 });
 
