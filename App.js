@@ -20,6 +20,34 @@ const storage = new MongoDBStore({
   collection: "UserSession",
 });
 
+// SEO START
+
+app.get("/sitemap.xml", (req, res) => {
+  res.setHeader("Content-Type", "application/xml");
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://notepad-3-38di.onrender.com/login</loc>
+    <priority>1.0</priority>
+  </url>
+
+    <url>
+    <loc>https://notepad-3-38di.onrender.com/register</loc>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>`);
+});
+
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain");
+  res.send(`User-agent: *
+Allow: /
+Sitemap: https://notepad-3-38di.onrender.com/login/sitemap.xml`);
+});
+
+// SEO END
+
 //secret key create ho rha hai
 
 app.use(
